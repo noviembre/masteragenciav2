@@ -112,7 +112,7 @@ class User extends Authenticatable
         $this->status = User::IS_ACTIVE;
         $this->save();
     }
-    
+
     public function toggleBan($value)
     {
         if($value == null)
