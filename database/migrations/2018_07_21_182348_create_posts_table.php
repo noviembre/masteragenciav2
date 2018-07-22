@@ -18,8 +18,18 @@ class CreatePostsTable extends Migration
 
             $table->string('title');
             $table->string('slug');
-            $table->text('contenido');
             $table->integer('category_id')->nullable();
+
+            $table->string('duracion1')->nullable();
+            $table->string('duracion2')->nullable();
+            $table->integer('price')->nullable();
+            $table->text('description');
+
+            $table->text('itinerary')->nullable();
+            $table->text('included')->nullable();
+            $table->text('notincluded')->nullable();
+            $table->text('recomendations')->nullable();
+
             $table->integer('user_id')->nullable();
             $table->integer('status')->default(0);
             $table->integer('views')->default(0);
