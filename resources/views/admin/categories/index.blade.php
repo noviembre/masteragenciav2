@@ -36,20 +36,34 @@
                     <table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
                         <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Nombre</th>
                             <th>Editar</th>
                             <th>Eliminar</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
 
                             @foreach($categories as $category)
                                 <tr>
+                                    <td> {{ $category->id }}</td>
                                     <td> {{ $category->title }}</td>
-                                    <td><a href="{{ route('categories.edit', ['id' => $category->id ]) }}" class="btn btn-info">Editar</a>  </td>
 
-                                    <td><a href="{{ route('categories.destroy', ['id' => $category->id ]) }}" class="btn btn-danger">Eliminar</a>
+                                    <td>
+                                        <a href="{{route('categories.edit', $category->id)}}" class="btn btn-info"> Editar</a></td>
+
+
+                                    <td>
+                                        {{Form::open(['route'=>['categories.destroy', $category->id], 'method'=>'delete'])}}
+                                        <button onclick="return confirm('are you sure?')" type="submit" class="btn btn-danger">
+                                            Eliminar
+                                        </button>
+
+                                        {{Form::close()}}
                                     </td>
+                                    
+                                    <td></td>
                                 </tr>
                             @endforeach
 
