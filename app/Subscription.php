@@ -14,7 +14,7 @@ class Subscription extends Model
         $sub->save();
         return $sub;
     }
-    
+
     public function remove()
     {
         $this->delete();
