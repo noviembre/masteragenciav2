@@ -46,6 +46,7 @@ class User extends Authenticatable
     {
         $user = new static;
         $user->fill($fields);
+        $user->password = bcrypt($fields['password']);
         $user->save();
         return $user;
     }
@@ -67,7 +68,7 @@ class User extends Authenticatable
         if($image == null) { return; }
         Storage::delete('/uploads/' . $this->image);
         $filename = str_random(10) . '.' . $image->extension();
-        $image->saveAs('uploads', $filename);
+        $image->storeAs('uploads', $filename);
         $this->image = $filename;
         $this->save();
     }

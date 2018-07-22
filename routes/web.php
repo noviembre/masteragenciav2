@@ -27,4 +27,7 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin', ], function(){
     #=================   TAGS   ====================
     Route::resource('/tags', 'TagsController');
 
+    #=================   USUARIOS   ====================
+    Route::resource('/users', 'UsersController');
+
 });
