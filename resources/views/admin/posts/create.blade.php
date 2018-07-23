@@ -1,164 +1,237 @@
+@extends('admin.layouts.template')
 
-
-@extends('layouts.template')
 
 @section('content')
-
-    <!-- Top starts-->
     <div class="row page-titles">
-        <div class="col-md-4 align-self-center">
-            <h4 class="theme-cl">Crear un Nuevo Tour</h4>
-        </div>
-
-        <div class="col-md-8 text-right">
-
-            <div class="btn-group mr-lg-2">
-                <a href="{{ route('posts') }}" class="btn btn-default">
-                    Volver
-                </a>
-            </div>
-
+        <div class="col-md-12 align-self-center">
+            <h4 class="theme-cl">Crear Post</h4>
         </div>
     </div>
-    <!-- Top ends-->
 
 
-    <!-- Row -->
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <form action="{{ route('post.store') }}" method="post" enctype="multipart/form-data">
 
-                    {{ csrf_field() }}
-                    <div class="row">
-                        <!-- col-md-6 -->
+                <div class="row">
+                    @include('admin.errors')
+                </div>
+
+                {{Form::open([
+                    'route'	=> 'posts.store',
+                    'files'	=>	true ])}}
+                <div class="row">
 
 
-                        <div class="col-md-6 col-12">
-                            <br>
-                            <div class="col-md-12">
 
-                                <div class="row">
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label><b>Nombre:</b></label>
-                                            <input name="titulo" type="text" class="form-control" placeholder="Cusco Magico" required="">
-                                        </div>
-                                    </div>
+                    <!-- col-md-6 -->
+                    <div class="col-md-6 col-12">
 
-                                    <div class="col-md-3 col-12">
-                                        <div class="form-group">
-                                            <label><b>Duracion 1:</b></label>
-                                            <input name="duracion1" type="text" class="form-control" placeholder="8 Dias" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-12">
-                                        <div class="form-group">
-                                            <label><b>Duracion 2:</b></label>
-                                            <input name="duracion2" type="text" class="form-control" placeholder="7 Noches" required>
-                                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Titulo</label>
+                                <input name="title" value="{{old('title')}}" type="text" class="form-control" placeholder="Titulo">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Duracion 1:</label>
+                                        <input name="duracion1" value="{{old('duracion1')}}" type="text" class="form-control" placeholder="Full">
                                     </div>
                                 </div>
 
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label><b>Categoria:</b></label>
-                                    <select name="category_id" id="category" class="custom-select mb-2 form-control" required>
-                                        @foreach($categories as $category)
-
-                                            <option value="{{ $category->id }}">
-                                                {{ $category->name }}
-                                            </option>
-
-                                        @endforeach
-                                    </select>
-
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label><b>Descripcion:</b></label>
-
-                                    <textarea name="contenido" rows="5" class="form-control" placeholder="Breve Descripcion del tour" required></textarea>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Duracion 2</label>
+                                        <input name="duracion2" value="{{old('duracion2')}}" type="text" class="form-control" placeholder="Day">
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label><b>Imagen:</b></label>
-                                    <input name="featured" type="file" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-12">
+
+                            <div class="form-group">
+                                <label for="exampleInputFile">Imagen:</label>
+                                <input name="image" type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                                <small id="fileHelp" class="form-text text-muted">
+                                    Sube una Imagen (Opcional)
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12">
+
+                            <div class="form-group">
+                                <label for="exampleTextarea">Descripcion</label>
+                                <textarea name="description" class="form-control" id="exampleTextarea" rows="3"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12">
+
+                            <div class="form-group">
+                                <label>Language</label>
+                                {{Form::select('category_id',
+                        $categories,
+                        null,
+                        ['class' => 'form-control select2'])
+                    }}
+                            </div>
+                            
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Nation</label>
+                                <input type="text" class="form-control" placeholder="Canada">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- col-md-6 -->
+                    <div class="col-md-6 col-12 padd-top-20">
+
+                        <!-- col-md-12 -->
+                        <div class="col-md-12">
+
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+
+                                    <div class="form-group">
+
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input name="is_featured" type="checkbox" class="form-check-input">
+                                               Visible
+                                            </label>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6 col-12">
+
+                                    <div class="form-group">
+                                        <label>
+                                            <input type="checkbox" class="minimal" name="status">
+                                        </label>
+                                        <label>
+                                            Activo
+                                        </label>
+                                    </div>
+
+
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                        </div>
+                        <!-- col-md-12 -->
 
-                                <div class="row">
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label><b>Soles:</b></label>
-                                            <input name="soles" type="number" class="form-control" min="1" required>
-                                        </div>
-                                    </div>
+                        <!-- col-md-12 -->
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Fake Date</label>
+                                <input name="date" value="{{old('date')}}" type="date" class="form-control" >
+                            </div>
+                        </div>
+                        <!-- col-md-12 -->
 
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label><b>Dolares:</b></label>
-                                            <input name="dolares" type="number" class="form-control" min="1" required>
-                                        </div>
+                        <!-- col-md-12 -->
+                        <div class="col-md-12">
+
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Precio</label>
+                                        <input name="price" type="text" class="form-control" placeholder="S/.">
                                     </div>
                                 </div>
 
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Twitter</label>
+                                        <input type="text" class="form-control" placeholder="https://twitter.com/daniel">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- col-md-12 -->
+
+
+
+                        <!-- col-md-12 -->
+
+                        <!-- col-md-12 -->
+                        <div class="col-md-12">
+                            <div class="form-group">
+
+                                <label>Etiquetas</label>
+
+                                {{Form::select('tags[]',
+    $tags,
+    null,
+    ['class' => 'form-control select2', 'multiple'=>'multiple','data-placeholder'=>'Tagss'])
+}}
+
+
+
+                            </div>
+                        </div>
+                        <!-- col-md-12 -->
+
+
+                        <!-- col-md-12 -->
+
+                        <!-- col-md-12 -->
+                        <div class="col-md-12">
+                            <div class="form-group">
+
+                                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Guardar</button>
                             </div>
 
 
                         </div>
-
-                        <!-- col-md-6 -->
-                        <div class="col-md-6 col-12 padd-top-20">
-
-                            <!-- col-md-12 -->
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label><b>Etiquetas:</b></label>
-                                    @foreach($tags as $tag)
-                                        <p>
-                                    <span class="custom-checkbox">
-                                        <input value="{{ $tag->id }}" name="tags[]" type="checkbox" id="checkbox1">
-                                        <label for=""></label> {{ $tag->tag }}
-                                    </span>
-                                        </p>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <!-- col-md-12 -->
-
-                            <!-- col-md-12 -->
-                            <div class="col-md-12">
-                                @include('admin.includes.errors')
-                            </div>
-                            <!-- col-md-12 -->
-
-                            <!-- col-md-12 -->
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="submit" value="Guardar" class="btn waves-effect waves-light btn-rounded btn-outline-success">
-                                </div>
-                            </div>
-                            <!-- col-md-12 -->
-
-                        </div>
-
+                        <!-- col-md-12 -->
 
                     </div>
 
-                </form>
+
+                </div>
+                {{Form::close()}}
 
             </div>
         </div>
     </div>
-    <!-- ./row -->
 @stop
 
+@section('styles')
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/select2.min.css') }}">
+
+
+@stop
+
+@section('scripts')
+
+    <!-- Select2 -->
+    <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
+
+
+
+@stop

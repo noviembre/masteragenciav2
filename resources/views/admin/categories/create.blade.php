@@ -35,6 +35,7 @@
                 {!! Form::open(['route' => 'categories.store']) !!}
 
 
+
                     <div class="row">
                         <!-- col-md-6 -->
 

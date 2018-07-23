@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class Post extends Model
 {
@@ -18,7 +19,7 @@ class Post extends Model
 
         'title',
         'description',
-        'user_id',
+        'date',
 
         #------ Nuevos campos ------
 
@@ -80,18 +81,27 @@ class Post extends Model
 
     public function remove()
     {
-        Storage::delete('/uploads/' . $this->image);
+        $this->removeImage();
         $this->delete();
+    }
+
+    public function removeImage()
+    {
+        if($this->image != null)
+        {
+            Storage::delete('uploads/' . $this->image);
+        }
     }
 
     public function uploadImage($image)
     {
         if($image == null) { return; }
-        Storage::delete('/uploads/' . $this->image);
+        $this->removeImage();
         $filename = str_random(10) . '.' . $image->extension();
-        $image->saveAs('uploads', $filename);
+        $image->storeAs('uploads', $filename);
         $this->image = $filename;
         $this->save();
+
     }
 
     public function getImage()
@@ -159,6 +169,41 @@ class Post extends Model
     }
 
 
+
+    #---------------------------------
+    #fuente:
+    #laravel.com/docs/5.4/eloquent-mutators#defining-a-mutator
+    #ejemplo:
+    #Defining A Mutator
+    #---------------------------------
+    public function setDateAttribute($value)
+    {
+        $date = Carbon::createFromFormat('d/m/y', $value)->format('Y-m-d');
+        $this->attributes['date'] = $date;
+    }
+    public function getDateAttribute($value)
+    {
+        $date = Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
+        return $date;
+    }
+    public function getCategoryTitle()
+    {
+        return ($this->category != null) ? $this->category->title  :   'Sin Categoria';
+    }
+    public function getTagsTitles()
+    {
+        return (!$this->tags->isEmpty())
+            ?   implode(', ', $this->tags->pluck('title')->all())
+            : 'Sin Etiqueta';
+    }
+    public function getCategoryID()
+    {
+        return $this->category != null ? $this->category->id : null;
+    }
+    public function getDate()
+    {
+        return Carbon::createFromFormat('d/m/y', $this->date)->format('F d, Y');
+    }
 
 
 

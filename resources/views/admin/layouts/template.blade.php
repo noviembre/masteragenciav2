@@ -25,13 +25,15 @@
     <!-- Page level plugin CSS -->
     <link href="{{ asset('assets/dist/css/animate.min.css') }}" rel="stylesheet">
 
+    @yield('styles')
+
+
     <!-- Custom styles for this template -->
     <link href="{{ asset('assets/dist/css/glovia.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/dist/css/glovia-responsive.min.css') }}" rel="stylesheet">
 
     <!-- Custom styles for Color -->
     <link href="{{ asset('assets/dist/css/skins/default.css') }}" rel="stylesheet">
-    @yield('styles')
 
     <link href="{{ asset('assets/toastr/css/toastr.min.css') }}" rel="stylesheet">
 
@@ -67,33 +69,6 @@
     </div>
 </footer>
 
-<!-- Switcher -->
-<button class="w3-button w3-teal w3-xlarge w3-right" onclick="openRightMenu()"><i class="spin theme-cl fa fa-cog" aria-hidden="true"></i></button>
-<div class="w3-sidebar w3-bar-block w3-card-2 w3-animate-right" style="display:none;right:0;" id="rightMenu">
-    <button onclick="closeRightMenu()" class="w3-bar-item w3-button w3-large theme-bg">Close &times;</button>
-    <div class="title-logo">
-
-        <h4>Choose Your Color</h4>
-    </div>
-    <ul id="styleOptions" title="switch styling">
-        <li>
-            <a href="javascript: void(0)" class="cl-box cl-red" data-theme="skins/red"></a>
-        </li>
-        <li>
-            <a href="javascript: void(0)" class="cl-box cl-green" data-theme="skins/green"></a>
-        </li>
-        <li>
-            <a href="javascript: void(0)" class="cl-box cl-orange" data-theme="skins/orange"></a>
-        </li>
-        <li>
-            <a href="javascript: void(0)" class="cl-box cl-blue" data-theme="skins/blue"></a>
-        </li>
-        <li>
-            <a href="javascript: void(0)" class="cl-box cl-default" data-theme="skins/default"></a>
-        </li>
-    </ul>
-</div>
-<!-- /Switcher -->
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded cl-white gredient-bg" href="#page-top">
@@ -145,18 +120,13 @@ toastr.info("{{ Session::get('info') }}")
 <script src="{{ asset('assets/plugins/angular-tooltip/index.js') }}"></script>
 
 
+@yield('scripts')
+
+<!-- FastClick -->
+<script src="{{ asset('assets/plugins/fastclick/fastclick.js') }}"></script>
+
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('assets/dist/js/glovia.js') }}"></script>
-
-
-<script>
-    function openRightMenu() {
-        document.getElementById("rightMenu").style.display = "block";
-    }
-    function closeRightMenu() {
-        document.getElementById("rightMenu").style.display = "none";
-    }
-</script>
 
 
 <script>
@@ -164,7 +134,6 @@ toastr.info("{{ Session::get('info') }}")
 </script>
 
 
-@yield('scripts')
 
 
 <!-- Wrapper -->

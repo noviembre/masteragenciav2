@@ -35,6 +35,9 @@ class CreatePostsTable extends Migration
             $table->integer('views')->default(0);
             $table->integer('is_featured')->default(0);
 
+            $table->date('date')->nullable();
+            $table->string('image')->nullable();
+
             $table->timestamps();
         });
     }

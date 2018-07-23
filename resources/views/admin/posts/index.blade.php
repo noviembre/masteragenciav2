@@ -1,20 +1,24 @@
-
-@extends('layouts.template')
+@extends('admin.layouts.template')
 
 
 @section('content')
 
     <!-- Top starts-->
     <div class="row page-titles">
-        <div class="col-md-4 align-self-center">
-            <h4 class="theme-cl">Lista de los tours</h4>
+        <div class="col-md-3 align-self-center">
+            <h4 class="theme-cl">Todos los Posts</h4>
         </div>
 
-        <div class="col-md-8 text-right">
+        <div class="col-md-9 text-right">
 
+            <div class="btn-group mr-lg-2">
+                <a href="#" class="btn btn-warning">
+                    Tours
+                </a>
+            </div>
             <div class="btn-group">
-                <a href="{{ route('post.create') }}" class="btn gredient-btn" title="Crear Tour">
-                    Crear Tour
+                <a href="{{ route('posts.create') }}" class="btn gredient-btn">
+                    Crear Post
                 </a>
             </div>
         </div>
@@ -32,47 +36,35 @@
                     <table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
                         <thead>
                         <tr>
+                            <th>ID</th>
+                            <th>Titulo</th>
                             <th>Imagen</th>
-                            <th>Tour</th>
-                            <th>Duracion</th>
-                            <th>Galeria</th>
                             <th>Editar</th>
-                            <th>Desactivar</th>
+                            <th>Eliminar</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        @if($posts->count()> 0)
 
-                            @foreach($posts as $post)
-                                <tr>
-                                    <td><img src="{{ $post->featured }}" alt="{{ $post->titulo }}" width="80px"> </td>
-                                    <td>{{ $post->titulo }}</td>
-                                    <td>{{ $post->duracion1 .' '. $post->duracion2 }}</td>
-                                    <td>
-                                        <a href="{{ route('picture.show', ['id' => $post->id]) }}" class="btn btn-rounded btn-primary">Galeria</a>
+                        @foreach($posts as $post)
+                            <tr>
+                                <td> {{ $post->id }}</td>
+                                <td> {{ $post->title }}</td>
+                                <td><img src="{{$post->getImage()}}" alt="" width="100"></td>
 
-                                    </td>
-
-                                    <td>
-                                        <a href="{{ route('post.edit', ['id' => $post->id]) }}" class="btn btn-rounded btn-info">Editar</a>
-
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('post.delete', ['id' => $post->id]) }}" class="btn btn-rounded btn-danger">Desactivar</a>
-                                    </td>
+                                <td>
+                                    <a href="{{route('posts.edit', $post->id)}}" class="btn btn-info"> Editar</a></td>
 
 
-                                </tr>
-                            @endforeach
+                                <td>
+                                    eliminar
+                                </td>
 
-                        @else
-
-                            <tr >
-                                <th colspan="5" class="text-center"> No tiene ningun post</th>
+                                <td></td>
                             </tr>
+                        @endforeach
 
 
-                        @endif
 
                         </tbody>
 
@@ -85,27 +77,4 @@
     </div>
     <!-- ./row -->
 
-
 @stop
-
-@section('styles')
-    <link href="{{ asset('assets/plugins/datatables/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-@endsection
-
-@section('scripts')
-    <script type="text/javascript" src="{{ asset('assets/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#example').DataTable({
-                "language": {
-                    "url": " {{asset('assets/plugins/datatables/js/Spanish.json')}}"
-                }
-            });
-
-
-        } );
-
-    </script>
-@endsection

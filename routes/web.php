@@ -30,4 +30,7 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin', ], function(){
     #=================   USUARIOS   ====================
     Route::resource('/users', 'UsersController');
 
+    #==========  POSTS  ================================
+    Route::resource('/posts', 'PostsController');
+
 });
