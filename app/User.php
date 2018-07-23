@@ -53,24 +53,46 @@ class User extends Authenticatable
 
     public function edit($fields)
     {
-        $this->fill($fields);
+        $this->fill($fields); //name,email
+        if ($fields['password'] != null)
+        {
+            $this->password = bcrypt($fields['password']);
+        }
         $this->save();
+    }
+
+    public function generatePassword($password)
+    {
+        if($password != null)
+        {
+            $this->password = bcrypt($password);
+            $this->save();
+        }
     }
 
     public function remove()
     {
-        Storage::delete('/uploads/' . $this->image);
+        $this->removeAvatar();
         $this->delete();
     }
 
     public function uploadAvatar($image)
     {
+        $this->save();
         if($image == null) { return; }
-        Storage::delete('/uploads/' . $this->image);
+        $this->removeAvatar();
         $filename = str_random(10) . '.' . $image->extension();
         $image->storeAs('uploads', $filename);
-        $this->image = $filename;
+        $this->avatar = $filename;
         $this->save();
+    }
+
+    public function removeAvatar()
+    {
+        if($this->avatar != null)
+        {
+            Storage::delete('uploads/' . $this->avatar);
+        }
     }
 
 
