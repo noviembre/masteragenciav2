@@ -145,7 +145,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Fake Date</label>
-                                <input name="date" value="{{old('date')}}" type="date" class="form-control" >
+                                <input  value="{{old('date')}}" type="date" class="form-control" >
                             </div>
                         </div>
                         <!-- col-md-12 -->
@@ -201,7 +201,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
 
-                                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Guardar</button>
+                                <button class="btn btn-primary nextBtn btn-lg pull-right" type="submit">Guardar</button>
                             </div>
 
 

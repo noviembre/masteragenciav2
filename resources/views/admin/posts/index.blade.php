@@ -55,10 +55,16 @@
                                 <td>
                                     <a href="{{route('posts.edit', $post->id)}}" class="btn btn-info"> Editar</a></td>
 
-
                                 <td>
-                                    eliminar
+                                    {{Form::open(['route'=>['posts.destroy', $post->id], 'method'=>'delete'])}}
+                                    <button onclick="return confirm('are you sure?')" type="submit" class="btn btn-danger">Eliminar
+
+                                    </button>
+
+                                    {{Form::close()}}
+
                                 </td>
+
 
                                 <td></td>
                             </tr>

@@ -31,7 +31,7 @@ class PostsController extends Controller
 
         $this->validate($request, [
             'title' =>'required',
-            'contenido'   =>  'required',
+            'description'   =>  'required',
             'image' =>  'nullable|image'
         ]);
         $post = Post::add($request->all());
@@ -42,5 +42,44 @@ class PostsController extends Controller
         $post->toggleFeatured($request->get('is_featured'));
         return redirect()->route('posts.index');
     }
+
+    public function edit($id)
+    {
+        $post = Post::find($id);
+        $categories = Category::pluck('title', 'id')->all();
+        $tags = Tag::pluck('title', 'id')->all();
+        $selectedTags = $post->tags->pluck('id')->all();
+        return view('admin.posts.edit', compact(
+            'categories',
+            'tags',
+            'post',
+            'selectedTags'
+        ));
+    }
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'title' =>'required',
+            'description'   =>  'required',
+            'image' =>  'nullable|image'
+        ]);
+        $post = Post::find($id);
+        $post->edit($request->all());
+
+        $post->uploadImage($request->file('image'));
+        $post->setCategory($request->get('category_id'));
+        $post->setTags($request->get('tags'));
+        $post->toggleStatus($request->get('status'));
+        $post->toggleFeatured($request->get('is_featured'));
+        return redirect()->route('posts.index');
+    }
+
+    public function destroy($id)
+    {
+        Post::find($id)->remove();
+        return redirect()->route('posts.index');
+    }
+
+
 
 }
