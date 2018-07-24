@@ -15,7 +15,9 @@
             <div class="card">
 
                 <div class="row">
-                    @include('admin.errors')
+                    <div class="col-12">
+                        @include('admin.errors')
+                    </div>
                 </div>
 
                 {{Form::open([
@@ -87,24 +89,8 @@
 
                         <div class="col-md-12">
 
-                            <div class="form-group">
-                                <label>Category:</label>
 
-                                {{Form::select('category_id',
-                                $categories,
-                              $post->getCategoryID(),
-                                ['class' => 'form-control select2'])
-                            }}
 
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Nation</label>
-                                <input type="text" class="form-control" placeholder="Canada">
-                            </div>
                         </div>
                     </div>
 
@@ -123,12 +109,12 @@
                                     <div class="form-group">
 
                                         <div class="form-check">
-                                            <label class="form-check-label">
-                                                {{Form::checkbox('is_featured', '1', $post->is_featured, ['class'=>'minimal'])}}
-                                            </label>
-                                            <label>visible</label>
-                                        </div>
 
+                                            <label class="form-check-label">
+                                                {{Form::checkbox('is_featured', '1', $post->is_featured, ['class'=>'form-check-input'])}}
+                                                visible
+                                            </label>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -136,44 +122,45 @@
                                 <div class="col-md-6 col-12">
 
                                     <div class="form-group">
-                                        <label>
-                                            {{Form::checkbox('status', '1', $post->status, ['class'=>'minimal'])}}
+                                        <label class="form-check-label">
+                                            {{Form::checkbox('status', '1', $post->status, ['class'=>'form-check-input'])}}
+                                            Activo
                                         </label>
-                                        <label>Activo</label>
 
                                     </div>
-
 
                                 </div>
                             </div>
 
                         </div>
-                        <!-- col-md-12 -->
+
+
 
                         <!-- col-md-12 -->
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Fake Date</label>
-                                <input  value="{{old('date')}}" type="date" class="form-control" >
-                            </div>
-                        </div>
-                        <!-- col-md-12 -->
 
-                        <!-- col-md-12 -->
-                        <div class="col-md-12">
+
 
                             <div class="row">
                                 <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label>Precio</label>
-                                        <input value="{{$post->price}}" name="price" type="text" class="form-control" placeholder="S/.">
+                                    <label>Precio</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">S/.</span>
+                                        <input name="price" value="{{$post->price}}" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                        <span class="input-group-addon">.00</span>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
-                                        <label>Twitter</label>
-                                        <input type="text" class="form-control" placeholder="https://twitter.com/daniel">
+                                        <label>Categoria:</label>
+
+                                        {{Form::select('category_id',
+                                        $categories,
+                                      $post->getCategoryID(),
+                                        ['class' => 'form-control select2'])
+                                    }}
+
                                     </div>
                                 </div>
                             </div>
@@ -240,6 +227,7 @@
     <!-- Select2 -->
     <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
 
-
+    <!-- Advance Form Element -->
+    <script src="{{ asset('assets/dist/js/custom/form-element.js') }}"></script>
 
 @stop
